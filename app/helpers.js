@@ -11,7 +11,7 @@ let serviceData = {};
  * @param  {Integer} id [description]
  * @return {[type]}    [description]
  */
-function initCar(id) {
+exports.initCar = (id) => {
   return {
     id: id + 1,
     x: defaultConfig.initPosition[0],
@@ -19,7 +19,7 @@ function initCar(id) {
     available: true,
     timeRemaining: 0
   };
-}
+};
 
 /**
  * Init the serviceData object
@@ -30,7 +30,7 @@ exports.initServiceData = (config) => {
   serviceData = config;
   // init the cars
   for (let i = 0; i < config.cars; i += 1) {
-    serviceData.carData.push(initCar(i));
+    serviceData.carData.push(this.initCar(i));
   }
 };
 
@@ -39,8 +39,8 @@ exports.initServiceData = (config) => {
  */
 exports.resetCarData = () => {
   return new Promise((resolve, reject) => {
-    for (let i = 0; i < serviceData.carData; i += 1) {
-      serviceData[i] = initCar(i);
+    for (let i = 0; i < serviceData.carData.length; i += 1) {
+      serviceData.carData[i] = this.initCar(i);
     }
     resolve(true);
   });
@@ -85,7 +85,7 @@ exports.incrementTimeUnit = () => {
  * @return {Integer} the distance between a and b
  */
 exports.computeDistance = (a, b) => {
-  return ((b.y - a.y) + (b.x - a.x));
+  return Math.abs((b.y - a.y) + (b.x - a.x));
 };
 
 

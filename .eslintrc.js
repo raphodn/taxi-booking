@@ -8,5 +8,8 @@ module.exports = {
       "max-len": ["error", 120],
       "no-param-reassign": "off",
       "no-nested-ternary": "off"
+    },
+    "env": {
+      "jest": true
     }
 };

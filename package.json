@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node app.js",
     "lint": "node_modules/eslint/bin/eslint.js .",
-    "test": ""
+    "test": "jest"
   },
   "author": "Raphael ODINI",
   "license": "ISC",
@@ -19,6 +19,7 @@
   "devDependencies": {
     "eslint": "^4.12.1",
     "eslint-config-airbnb-base": "^12.1.0",
-    "eslint-plugin-import": "^2.8.0"
+    "eslint-plugin-import": "^2.8.0",
+    "jest": "^21.2.1"
   }
 }
