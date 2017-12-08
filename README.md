@@ -1,5 +1,9 @@
 # Taxi Booking System
 
+## Goal
+
+A simple implementation of a taxi booking system in a 2D world. Cars start at (0, 0), can be booked by a customer via the /api/book endpoint (the closest car to the customer must be chosen), and remain unavailable for the whole duration of the trip.
+
 
 ## Get started
 
@@ -29,25 +33,25 @@ npm run test
 
 ## Data
 
-### Config defaults
+### Default config
 
 ```
 /config/default.js
 ```
 
-- time the service has been up
-- initial car positions
-- number of cars
+- `timeServiceUp` (integer): time the service has been up
+- `initPosition` (array [x, y]): initial car positions
+- `cars` (integer): number of cars
+- `carData` (array): contains the cars current details/status
 
 
 ### Cars
 
-```
-- id: integer
-- x: integer
-- y: integer
-- available: boolean
-```
+- `id` (integer)
+- `x` (integer): x position on the grid
+- `y` (integer): y position on the grid
+- `available` (boolean): false if booked
+- `timeRemaining` (integer): positive if currently booked, measures the time until the car is available again (decreases on each tick) 
 
 
 ## Endpoints
