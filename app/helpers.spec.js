@@ -1,19 +1,27 @@
 const helpers = require('./helpers');
+const defaultConfig = require('../config/default');
 
-helpers.initCar = jest.fn();
+// helpers.initCar = jest.fn();
 
+beforeEach(() => {
+  jest.resetAllMocks();
+});
 
 describe('initServiceData', () => {
   beforeEach(() => {
-    jest.resetAllMocks();
+    helpers.initCar = jest.fn();
   });
   test('should have called initCar 3 times', () => {
+    // before
     const CONFIG = { cars: 3, carData: [] };
+    // test
     helpers.initServiceData(CONFIG);
     expect(helpers.initCar).toHaveBeenCalledTimes(3);
   });
   test('should have called initCar 0 times', () => {
+    // before
     const CONFIG = { cars: 0, carData: [] };
+    // test
     helpers.initServiceData(CONFIG);
     expect(helpers.initCar).toHaveBeenCalledTimes(0);
   });
@@ -21,29 +29,128 @@ describe('initServiceData', () => {
 
 describe('resetCarData', () => {
   beforeEach(() => {
-    jest.resetAllMocks();
+    helpers.initCar = jest.fn();
   });
   test('should have returned true & called initCar 6 (3+3) times', (done) => {
-    const CONFIG = { cars: 3, carData: [] };
     // before: initServiceData with CONFIG
+    const CONFIG = { cars: 3, carData: [] };
     helpers.initServiceData(CONFIG);
     // test: reset car data
     helpers.resetCarData().then((data) => {
       expect(data).toBe(true);
+      expect(helpers.initCar).toHaveBeenCalledTimes(3 + 3);
+      done();
     });
-    expect(helpers.initCar).toHaveBeenCalledTimes(3 + 3);
-    done();
   });
   test('should have returned true & called initCar 0 times', (done) => {
-    const CONFIG = { cars: 0, carData: [] };
     // before: initServiceData with CONFIG
+    const CONFIG = { cars: 0, carData: [] };
     helpers.initServiceData(CONFIG);
     // test: reset car data
     helpers.resetCarData().then((data) => {
       expect(data).toBe(true);
+      expect(helpers.initCar).toHaveBeenCalledTimes(0 + 0);
+      done();
     });
-    expect(helpers.initCar).toHaveBeenCalledTimes(0 + 0);
-    done();
+  });
+});
+
+describe('incrementTimeUnit', () => {
+  describe('timeServiceUp field', () => {
+    test('should increment the timeServiceUp by 1 and return that value', (done) => {
+      // before: set current state
+      const STATE = {
+        timeServiceUp: 10,
+        initPosition: [0, 0],
+        cars: 0,
+        carData: []
+      };
+      helpers.setServiceData(STATE);
+      // test
+      helpers.incrementTimeUnit().then((data) => {
+        expect(data).toBe(11);
+        const NEW_STATE = helpers.getServiceData();
+        expect(NEW_STATE.timeServiceUp).toBe(11);
+        done();
+      });
+    });
+  });
+  describe('car is available', () => {
+    test('it should keep the car\'s timeRemaining to 0', (done) => {
+      // before: set current state
+      const STATE = {
+        timeServiceUp: 10,
+        initPosition: [0, 0],
+        cars: 1,
+        carData: [
+          {
+            id: 1,
+            x: 2,
+            y: 4,
+            available: true,
+            timeRemaining: 0
+          }
+        ]
+      };
+      helpers.setServiceData(STATE);
+      // test
+      helpers.incrementTimeUnit().then((data) => {
+        const NEW_STATE = helpers.getServiceData();
+        expect(NEW_STATE.carData[0].timeRemaining).toBe(0);
+        done();
+      });
+    });
+  });
+  describe('car is not available', () => {
+    test('it should decrease the car\'s timeRemaining by 1', (done) => {
+      // before: set current state
+      const STATE = {
+        timeServiceUp: 10,
+        initPosition: [0, 0],
+        cars: 1,
+        carData: [
+          {
+            id: 1,
+            x: 2,
+            y: 4,
+            available: false,
+            timeRemaining: 5
+          }
+        ]
+      };
+      helpers.setServiceData(STATE);
+      // test
+      helpers.incrementTimeUnit().then((data) => {
+        const NEW_STATE = helpers.getServiceData();
+        expect(NEW_STATE.carData[0].timeRemaining).toBe(4);
+        done();
+      });
+    });
+    test('if timeRemaining == 1, should decrease the car\'s timeRemaining by 1 and set available to true', (done) => {
+      // before: set current state
+      const STATE = {
+        timeServiceUp: 10,
+        initPosition: [0, 0],
+        cars: 1,
+        carData: [
+          {
+            id: 1,
+            x: 2,
+            y: 4,
+            available: false,
+            timeRemaining: 1
+          }
+        ]
+      };
+      helpers.setServiceData(STATE);
+      // test
+      helpers.incrementTimeUnit().then((data) => {
+        const NEW_STATE = helpers.getServiceData();
+        expect(NEW_STATE.carData[0].timeRemaining).toBe(0);
+        expect(NEW_STATE.carData[0].available).toBe(true);
+        done();
+      });
+    });
   });
 });
 

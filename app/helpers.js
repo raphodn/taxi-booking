@@ -4,12 +4,32 @@ let serviceData = {};
 
 
 // =============================================================================
+//  GET / SET serviceData
+
+/**
+ * get the serviceData object (for testing purpose)
+ * @return {Object}
+ */
+exports.getServiceData = () => {
+  return serviceData;
+};
+
+/**
+ * set the serviceData object (for testing purpose)
+ * @param {Object}
+ */
+exports.setServiceData = (newServiceData) => {
+  serviceData = newServiceData;
+};
+
+
+// =============================================================================
 //  INIT
 
 /**
- * [initCar description]
- * @param  {Integer} id [description]
- * @return {[type]}    [description]
+ * init car data
+ * @param  {Integer} id [car id]
+ * @return {Object} [initialized car object]
  */
 exports.initCar = (id) => {
   return {
@@ -23,7 +43,7 @@ exports.initCar = (id) => {
 
 /**
  * Init the serviceData object
- * @param  {Object} config [description]
+ * @param  {Object} config [default config]
  */
 exports.initServiceData = (config) => {
   // copy over the app config
@@ -36,6 +56,7 @@ exports.initServiceData = (config) => {
 
 /**
  * Reset the cars
+ * @return {Promise}
  */
 exports.resetCarData = () => {
   return new Promise((resolve, reject) => {
@@ -55,7 +76,7 @@ exports.resetCarData = () => {
  * For each car:
  * - decrese by 1 the timeRemaining field
  * - if (timeRemaining === 0) set the car to available
- * @return {[type]} [description]
+ * @return {Promise} [description]
  */
 exports.incrementTimeUnit = () => {
   return new Promise((resolve, reject) => {
