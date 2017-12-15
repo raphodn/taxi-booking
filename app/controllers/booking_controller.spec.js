@@ -4,7 +4,7 @@ const bookingController = require('./booking_controller');
 const helpers = require('../../app/helpers');
 
 
-describe('test POST /book', () => {
+describe('test POST /api/book', () => {
   it('should return 400 if source is missing from body', (done) => {
     request(app)
       .post('/api/book')
@@ -26,7 +26,7 @@ describe('test POST /book', () => {
       });
   });
   it('should successfully book a car', (done) => {
-    // book
+    // before
     const STATE = {
       timeServiceUp: 10,
       initPosition: [0, 0],

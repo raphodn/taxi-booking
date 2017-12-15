@@ -30,6 +30,10 @@ Available endpoints ? see below
 npm run test
 ```
 
+Libraries used:
+- Jest for unit tests
+- Jest & Supertest for integration tests
+
 
 ## Data
 
@@ -51,7 +55,7 @@ npm run test
 - `x` (integer): x position on the grid
 - `y` (integer): y position on the grid
 - `available` (boolean): false if booked
-- `timeRemaining` (integer): positive if currently booked, measures the time until the car is available again (decreases on each tick) 
+- `timeRemaining` (integer): positive if currently booked, measures the time until the car is available again (decreases on each tick)
 
 
 ## Endpoints
@@ -79,7 +83,8 @@ body
 
 success (car available)
 ```
-{
+status: 200
+body: {
   car_id: id,
   total_time: t
 }
@@ -87,7 +92,8 @@ success (car available)
 
 failed to find a car available
 ```
-{}
+status: 200
+body: {}
 ```
 
 
@@ -103,6 +109,15 @@ empty body
 - timestamp += 1 Time Unit
 - decrease all booked cars' timeRemaining time
 
+#### response
+
+```
+status: 200
+body: {
+  timeServiceUp: value
+}
+```
+
 
 ### POST /api/reset
 
@@ -115,3 +130,10 @@ empty body
 
 - put all the cars back to their initial position
 - make them all available
+
+
+#### response
+
+```
+status: 200
+```

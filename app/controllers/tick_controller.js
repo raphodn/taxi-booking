@@ -5,7 +5,7 @@ exports.incrementTimeUnit = (req, res, next) => {
   helpers.incrementTimeUnit()
     .then((result) => {
       res.json({
-        timeStatusUp: result
+        timeServiceUp: result
       });
     })
     .catch(err => next(err));
