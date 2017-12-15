@@ -19,23 +19,33 @@ describe('initServiceData', () => {
   });
 });
 
-// describe.only('resetCarData', () => {
-//   beforeEach(() => {
-//     jest.resetAllMocks();
-//   });
-//   test('should have called initCar 3 times', (done) => {
-//     const CONFIG = { cars: 3, carData: [{}, {}, {}] };
-//     helpers.resetCarData(CONFIG);
-//     expect(helpers.initCar).toHaveBeenCalledTimes(3);
-//     done();
-//   });
-//   test('should have called initCar 0 times', (done) => {
-//     const CONFIG = { cars: 0, carData: [] };
-//     helpers.resetCarData(CONFIG);
-//     expect(helpers.initCar).toHaveBeenCalledTimes(0);
-//     done();
-//   });
-// });
+describe('resetCarData', () => {
+  beforeEach(() => {
+    jest.resetAllMocks();
+  });
+  test('should have returned true & called initCar 6 (3+3) times', (done) => {
+    const CONFIG = { cars: 3, carData: [] };
+    // before: initServiceData with CONFIG
+    helpers.initServiceData(CONFIG);
+    // test: reset car data
+    helpers.resetCarData().then((data) => {
+      expect(data).toBe(true);
+    });
+    expect(helpers.initCar).toHaveBeenCalledTimes(3 + 3);
+    done();
+  });
+  test('should have returned true & called initCar 0 times', (done) => {
+    const CONFIG = { cars: 0, carData: [] };
+    // before: initServiceData with CONFIG
+    helpers.initServiceData(CONFIG);
+    // test: reset car data
+    helpers.resetCarData().then((data) => {
+      expect(data).toBe(true);
+    });
+    expect(helpers.initCar).toHaveBeenCalledTimes(0 + 0);
+    done();
+  });
+});
 
 describe('computeDistance', () => {
   test('should return 0 if source & destination are the same', () => {
