@@ -292,3 +292,46 @@ describe('getAvailableCars', () => {
     });
   });
 });
+
+describe('setCarBooked', () => {
+  const STATE = {
+    timeServiceUp: 10,
+    initPosition: [0, 0],
+    cars: 2,
+    carData: [
+      {
+        id: 1,
+        x: 2,
+        y: 4,
+        available: false,
+        timeRemaining: 1
+      },
+      {
+        id: 2,
+        x: 4,
+        y: 6,
+        available: true,
+        timeRemaining: 0
+      }
+    ]
+  };
+  beforeEach(() => {
+    helpers.setServiceData(STATE);
+  });
+  test('it should update the car data and return true', (done) => {
+    const BOOKING = {
+      carId: 2,
+      finalPosition: { x: 1, y: 1 },
+      timeRemaining: 10
+    };
+    helpers.setCarBooked(BOOKING.carId, BOOKING.finalPosition, BOOKING.timeRemaining).then((data) => {
+      expect(data).toEqual(true);
+      const NEW_STATE = helpers.getServiceData();
+      expect(NEW_STATE.carData[1].available).toBe(false);
+      expect(NEW_STATE.carData[1].x).toBe(BOOKING.finalPosition.x);
+      expect(NEW_STATE.carData[1].y).toBe(BOOKING.finalPosition.y);
+      expect(NEW_STATE.carData[1].timeRemaining).toBe(BOOKING.timeRemaining);
+      done();
+    });
+  });
+});

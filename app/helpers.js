@@ -76,7 +76,7 @@ exports.resetCarData = () => {
  * For each car:
  * - decrese by 1 the timeRemaining field
  * - if (timeRemaining === 0) set the car to available
- * @return {Promise} [description]
+ * @return {Promise}
  */
 exports.incrementTimeUnit = () => {
   return new Promise((resolve, reject) => {
@@ -101,9 +101,9 @@ exports.incrementTimeUnit = () => {
 
 /**
  * Compute the distance between 2 points in a 2D world
- * @param  {Array} a { x: , y: }
- * @param  {Array} b { x: , y: }
- * @return {Integer} the distance between a and b
+ * @param  {Object} a { x: , y: }
+ * @param  {Object} b { x: , y: }
+ * @return {Integer} [the distance between a and b]
  */
 exports.computeDistance = (a, b) => {
   return Math.abs((b.y - a.y) + (b.x - a.x));
@@ -116,7 +116,7 @@ exports.computeDistance = (a, b) => {
 /**
  * get car by id
  * @param  {Integer} carId
- * @return {Promise} car object
+ * @return {Promise} [car object]
  */
 exports.getCar = (carId) => {
   return new Promise((resolve, reject) => {
@@ -126,7 +126,7 @@ exports.getCar = (carId) => {
 
 /**
  * get cars array
- * @return {Promise} cars array
+ * @return {Promise} [cars array]
  */
 exports.getAllCars = () => {
   return new Promise((resolve, reject) => {
@@ -136,7 +136,7 @@ exports.getAllCars = () => {
 
 /**
  * get only available cars
- * @return {Promise} available cars array
+ * @return {Promise} [available cars array]
  */
 exports.getAvailableCars = () => {
   return new Promise((resolve, reject) => {
@@ -144,6 +144,15 @@ exports.getAvailableCars = () => {
   });
 };
 
+/**
+ * Book a car
+ * - set available to false
+ * - set its position to the final trip position
+ * - set its timeRemaining to the total length of its unavailability period
+ * @param {Integer} carId
+ * @param {Object} finalPosition { x: , y: }
+ * @param {Integer} timeBooked
+ */
 exports.setCarBooked = (carId, finalPosition, timeBooked) => {
   return new Promise((resolve, reject) => {
     this.getCar(carId).then((car) => {
