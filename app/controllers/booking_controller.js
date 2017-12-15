@@ -1,3 +1,4 @@
+const createError = require('http-errors');
 const helpers = require('../../app/helpers');
 
 /**
@@ -8,6 +9,12 @@ const helpers = require('../../app/helpers');
  * 5) return the car_id & total_time
  */
 exports.createBooking = (req, res, next) => {
+  if (!req.body.source) {
+    next(createError(400, 'Missing source'));
+  }
+  if (!req.body.destination) {
+    next(createError(400, 'Missing destination'));
+  }
   // get all available cars
   helpers.getAvailableCars()
     .then((availableCars) => {

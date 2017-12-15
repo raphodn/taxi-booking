@@ -4,7 +4,7 @@
   "description": "A basic taxi booking system in a 2D world",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js",
+    "start": "node server.js",
     "lint": "node_modules/eslint/bin/eslint.js .",
     "test": "jest"
   },
@@ -13,8 +13,10 @@
   "dependencies": {
     "body-parser": "^1.18.2",
     "express": "^4.16.2",
+    "http-errors": "^1.6.2",
     "minimist": "^1.2.0",
-    "morgan": "^1.9.0"
+    "morgan": "^1.9.0",
+    "supertest": "^3.0.0"
   },
   "devDependencies": {
     "eslint": "^4.12.1",

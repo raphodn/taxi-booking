@@ -1,7 +1,6 @@
 const helpers = require('./helpers');
 const defaultConfig = require('../config/default');
 
-// helpers.initCar = jest.fn();
 
 beforeEach(() => {
   jest.resetAllMocks();

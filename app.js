@@ -53,8 +53,6 @@ app.use((err, req, res, next) => {
 
 
 // =============================================================================
-//  LISTEN
+//  EXPORT (see server.js)
 
-app.listen(3000, () => {
-  console.log('\n Taxi Booking App listening on port 3000');
-});
+module.exports = app;
