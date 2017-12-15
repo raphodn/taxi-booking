@@ -113,18 +113,31 @@ exports.computeDistance = (a, b) => {
 // =============================================================================
 //  CARS
 
+/**
+ * get car by id
+ * @param  {Integer} carId
+ * @return {Promise} car object
+ */
 exports.getCar = (carId) => {
   return new Promise((resolve, reject) => {
     resolve(serviceData.carData.find(car => car.id === carId));
   });
 };
 
+/**
+ * get cars array
+ * @return {Promise} cars array
+ */
 exports.getAllCars = () => {
   return new Promise((resolve, reject) => {
     resolve(serviceData.carData);
   });
 };
 
+/**
+ * get only available cars
+ * @return {Promise} available cars array
+ */
 exports.getAvailableCars = () => {
   return new Promise((resolve, reject) => {
     resolve(serviceData.carData.filter(car => car.available === true));

@@ -181,3 +181,114 @@ describe('computeDistance', () => {
     expect(helpers.computeDistance(SOURCE, DESTINATION)).toBe(6);
   });
 });
+
+describe('getCar', () => {
+  const STATE = {
+    timeServiceUp: 10,
+    initPosition: [0, 0],
+    cars: 2,
+    carData: [
+      {
+        id: 1,
+        x: 2,
+        y: 4,
+        available: false,
+        timeRemaining: 1
+      },
+      {
+        id: 2,
+        x: 4,
+        y: 6,
+        available: true,
+        timeRemaining: 0
+      }
+    ]
+  };
+  beforeEach(() => {
+    helpers.setServiceData(STATE);
+  });
+  test('it should find and return the correct car object', (done) => {
+    helpers.getCar(1).then((data) => {
+      expect(data).toEqual(STATE.carData[0]);
+      done();
+    });
+  });
+  test('it should return undefined if it cannot find the car', (done) => {
+    helpers.getCar(3).then((data) => {
+      expect(data).toEqual(undefined);
+      done();
+    });
+  });
+  test('it should return undefined if it cannot find the car', (done) => {
+    helpers.getCar(3).then((data) => {
+      expect(data).toEqual(undefined);
+      done();
+    });
+  });
+});
+
+describe('getAllCars', () => {
+  const STATE = {
+    timeServiceUp: 10,
+    initPosition: [0, 0],
+    cars: 2,
+    carData: [
+      {
+        id: 1,
+        x: 2,
+        y: 4,
+        available: false,
+        timeRemaining: 1
+      },
+      {
+        id: 2,
+        x: 4,
+        y: 6,
+        available: true,
+        timeRemaining: 0
+      }
+    ]
+  };
+  beforeEach(() => {
+    helpers.setServiceData(STATE);
+  });
+  test('it should return the cars array', (done) => {
+    helpers.getAllCars().then((data) => {
+      expect(data).toEqual(STATE.carData);
+      done();
+    });
+  });
+});
+
+describe('getAvailableCars', () => {
+  const STATE = {
+    timeServiceUp: 10,
+    initPosition: [0, 0],
+    cars: 2,
+    carData: [
+      {
+        id: 1,
+        x: 2,
+        y: 4,
+        available: false,
+        timeRemaining: 1
+      },
+      {
+        id: 2,
+        x: 4,
+        y: 6,
+        available: true,
+        timeRemaining: 0
+      }
+    ]
+  };
+  beforeEach(() => {
+    helpers.setServiceData(STATE);
+  });
+  test('it should return only the available car in an array', (done) => {
+    helpers.getAvailableCars().then((data) => {
+      expect(data).toEqual([STATE.carData[1]]);
+      done();
+    });
+  });
+});
